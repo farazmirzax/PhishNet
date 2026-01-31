@@ -1,208 +1,183 @@
 # 🛡️ PhishNet
 
-**Advanced AI-powered phishing detection system built with deep learning**
+**Advanced Hybrid Phishing Detection System (Rule-Based + Deep Learning)**
 
-PhishNet is a full-stack web application that uses machine learning to detect phishing URLs in real-time. It analyzes URL patterns and characteristics to identify potential threats and protect users from malicious websites.
+PhishNet is a full-stack cybersecurity tool that detects phishing URLs in real-time. It utilizes a **Hybrid Architecture** combining a high-speed whitelist engine with a custom **Deep Learning Y-Network** (Bi-LSTM + Dense layers) to analyze URL patterns and protect users from malicious attacks.
 
 ![PhishNet Screenshot](https://via.placeholder.com/800x400?text=PhishNet+Dashboard)
 
 ## ✨ Features
 
-- 🤖 **AI-Powered Detection** - Deep learning model trained on phishing datasets
-- ⚡ **Real-time Analysis** - Instant URL scanning and risk assessment
-- 🎨 **Modern UI** - Beautiful, responsive interface with gradient animations
-- 📊 **Detailed Reports** - Comprehensive analysis with confidence scores
-- 🔒 **Secure** - Safe URL analysis without executing malicious code
-- 📈 **Risk Levels** - Clear categorization (Safe, Moderate, Critical)
+- 🧠 **Hybrid Detection Engine** - Instantly validates trusted domains (Whitelist) before engaging AI.
+- 🤖 **Deep Learning Model** - Custom "Y-Network" architecture (Bi-LSTM for text + Dense for metadata).
+- ⚡ **Real-time Analysis** - Millisecond-latency scanning.
+- 🎨 **Cyberpunk UI** - Modern interface built with React, TypeScript, and Tailwind CSS v4.
+- 📝 **Explainable AI (XAI)** - Generates a "Detailed Analysis Report" explaining *why* a URL was flagged (e.g., "Too many dots", "IP address usage").
+- 🔒 **Secure Sandbox** - Analyzes URL strings lexically without visiting or executing the malicious site.
 
 ## 🏗️ Tech Stack
 
 ### Backend
-- **Python 3.x** - Core backend language
-- **FastAPI** - High-performance web framework
-- **TensorFlow/Keras** - Deep learning model
-- **scikit-learn** - Feature extraction and preprocessing
-- **Pydantic** - Data validation
+- **Python 3.10+**
+- **FastAPI** - High-performance Async API
+- **TensorFlow/Keras** - Deep Learning Framework
+- **Scikit-learn** - Feature Scaling & Preprocessing
+- **Joblib/Pickle** - Artifact serialization
 
 ### Frontend
-- **React 18** - UI library
-- **TypeScript** - Type-safe JavaScript
-- **Vite** - Fast build tool
-- **Tailwind CSS** - Utility-first styling
-- **Lucide React** - Beautiful icons
-- **Axios** - HTTP client
+- **React 18** (TypeScript)
+- **Vite** - Next-gen frontend tooling
+- **Tailwind CSS v4** - Utility-first styling engine
+- **Lucide React** - Modern iconography
+- **Axios** - Promise-based HTTP client
 
 ## 📦 Project Structure
 
-```
+```bash
 PhishNet/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py              # FastAPI app entry point
-│   │   ├── api/
-│   │   │   └── endpoints.py     # API routes
-│   │   ├── core/
-│   │   │   └── config.py        # Configuration
+│   │   ├── main.py             # Server entry point
+│   │   ├── api/endpoints.py    # /scan route
 │   │   └── services/
-│   │       ├── feature_extractor.py  # URL feature extraction
-│   │       └── predictor.py          # ML model predictions
-│   ├── models/
-│   │   └── phishnet_v1.keras    # Trained model
+│   │       ├── feature_extractor.py  # Calculates 12 lexical features
+│   │       └── predictor.py          # Hybrid (Whitelist + AI) logic
+│   ├── models/                 # Saved .keras model
 │   ├── data/
-│   │   ├── raw/                 # Original datasets
-│   │   └── processed/           # Preprocessed data
-│   ├── training/
-│   │   └── train_model.py       # Model training script
-│   └── requirements.txt         # Python dependencies
+│   │   └── processed/          # Saved Tokenizer & Scaler
+│   └── training/               # Jupyter Notebooks for training
 │
 └── frontend/
     ├── src/
-    │   ├── components/
-    │   │   ├── Scanner.tsx      # URL input component
-    │   │   └── ResultCard.tsx   # Results display
-    │   ├── App.tsx              # Main app component
-    │   ├── types.ts             # TypeScript types
-    │   └── index.css            # Global styles
-    ├── package.json             # Node dependencies
-    └── vite.config.ts           # Vite configuration
+    │   ├── components/         # Scanner & ResultCard components
+    │   └── types.ts            # TypeScript interfaces
+    └── vite.config.ts
+
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Python 3.8+
-- Node.js 18+
-- npm or yarn
+* Python 3.8+
+* Node.js 18+
 
-### Backend Setup
+### 1. Backend Setup
 
-1. Navigate to the backend directory:
+Navigate to the backend directory and set up the Python environment:
+
 ```bash
 cd backend
+
+# Create virtual environment
+python -m venv .venv
+
+# Activate it
+# Windows:
+.venv\Scripts\activate
+# Mac/Linux:
+source .venv/bin/activate
+
+# Install dependencies
+pip install tensorflow pandas numpy scikit-learn matplotlib seaborn fastapi "uvicorn[standard]" python-multipart joblib
+
+# (Optional) Freeze dependencies for future use
+pip freeze > requirements.txt
+
 ```
 
-2. Create a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+Start the Server:
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-4. Start the FastAPI server:
 ```bash
 uvicorn app.main:app --reload
+
 ```
 
-The backend will run on `http://127.0.0.1:8000`
+*Server is running at: `http://127.0.0.1:8000*`
 
-### Frontend Setup
+### 2. Frontend Setup
 
-1. Navigate to the frontend directory:
+Open a new terminal and navigate to the frontend directory:
+
 ```bash
 cd frontend
-```
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Start the development server:
-```bash
+# Start the Development Server
 npm run dev
+
 ```
 
-The frontend will run on `http://localhost:5173`
+*Client is running at: `http://localhost:5173*`
 
 ## 🎯 Usage
 
-1. Open the application in your browser
-2. Enter a URL you want to analyze
-3. Click "SCAN" to perform the analysis
-4. View the results with:
-   - Risk level (Safe, Moderate, Critical)
-   - Confidence score
-   - Detailed analysis report
-5. Click "Scan Another URL" to analyze more URLs
+1. Open the application in your browser (`http://localhost:5173`).
+2. Enter a URL to analyze (e.g., `http://secure-login-paypal-update.com`).
+3. Click **SCAN**.
+4. View the results:
+* **Risk Level:** (Safe, Moderate, Critical)
+* **Confidence Score:** AI certainty percentage.
+* **Analysis Report:** Specific reasons for the flag.
+
+
 
 ## 🧪 API Endpoints
 
 ### POST `/api/scan`
-Analyze a URL for phishing indicators
+
+Analyzes a URL for phishing indicators.
 
 **Request Body:**
+
 ```json
 {
-  "url": "http://example.com"
+  "url": "[http://example-phish.com](http://example-phish.com)"
 }
+
 ```
 
 **Response:**
+
 ```json
 {
-  "url": "http://example.com",
-  "is_phishing": false,
-  "confidence_score": 0.85,
-  "display_confidence": "85.0%",
-  "risk_level": "SAFE",
+  "url": "[http://example-phish.com](http://example-phish.com)",
+  "is_phishing": true,
+  "confidence_score": 0.98,
+  "risk_level": "CRITICAL",
   "details": [
-    "URL length is normal (27 characters)",
-    "Domain appears legitimate",
-    "No suspicious patterns detected"
+    "⚠️ URL is suspiciously long",
+    "⚠️ Excessive number of dots detected",
+    "⚠️ Deep Learning pattern match"
   ]
 }
+
 ```
 
-## 🔬 Model Training
+## 🔬 Model Details
 
-To retrain the model with new data:
+The AI model utilizes a **Multi-Input "Y-Network" Architecture**:
 
-```bash
-cd backend/training
-python train_model.py
-```
-
-The model uses features such as:
-- URL length and structure
-- Domain characteristics
-- Special character patterns
-- Subdomain analysis
-- HTTPS presence
-
-## 🛠️ Development
-
-### Backend Development
-- Add new features in `backend/app/services/`
-- Update API routes in `backend/app/api/endpoints.py`
-- Modify model in `backend/training/train_model.py`
-
-### Frontend Development
-- Add new components in `frontend/src/components/`
-- Update styling in `frontend/src/index.css`
-- Modify types in `frontend/src/types.ts`
-
-## 📝 License
-
-MIT License - feel free to use this project for learning and development
+1. **Branch 1 (Text Sequence):** Character-level Embedding → Bi-Directional LSTM (Learns semantic patterns in the URL string).
+2. **Branch 2 (Metadata):** Dense Layers processing 12 calculated features (Length, IP presence, Dot count, Hyphen count, etc.).
+3. **Fusion:** Both branches are concatenated and passed through a final Dense layer with Sigmoid activation.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome!
 
-## 🐛 Known Issues
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-- TensorFlow dependency needs to be installed for the backend
-- Model file needs to be present in `backend/models/`
+## 📝 License
 
-## 📧 Contact
+Distributed under the MIT License.
 
-For questions or suggestions, please open an issue on GitHub.
+```
 
----
-
-**⚠️ Disclaimer:** This tool is for educational purposes. Always verify URLs through multiple sources before making security decisions.
+```
