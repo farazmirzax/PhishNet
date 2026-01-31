@@ -4,8 +4,6 @@
 
 PhishNet is a full-stack cybersecurity tool that detects phishing URLs in real-time. It utilizes a **Hybrid Architecture** combining a high-speed whitelist engine with a custom **Deep Learning Y-Network** (Bi-LSTM + Dense layers) to analyze URL patterns and protect users from malicious attacks.
 
-![PhishNet Screenshot](https://via.placeholder.com/800x400?text=PhishNet+Dashboard)
-
 ## ✨ Features
 
 - 🧠 **Hybrid Detection Engine** - Instantly validates trusted domains (Whitelist) before engaging AI.
@@ -177,7 +175,6 @@ Contributions are welcome!
 ## 📝 License
 
 Distributed under the MIT License.
-
 ```
-
+Distributed under the MIT License.
 ```
