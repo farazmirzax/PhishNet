@@ -93,7 +93,7 @@ function App() {
       <footer className="relative z-10 text-slate-500 text-xs font-mono flex items-center gap-4 py-6">
         <span className="text-slate-600">v1.0.0 Alpha</span>
         <span className="text-slate-700">•</span>
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-cyan-400 transition-colors group cursor-pointer">
+        <a href="https://github.com/farazmirzax/PhishNet" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-cyan-400 transition-colors group cursor-pointer">
           <Github className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" /> 
           Open Source
         </a>
