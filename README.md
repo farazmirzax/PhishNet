@@ -173,8 +173,4 @@ Contributions are welcome!
 5. Open a Pull Request
 
 ## 📝 License
-
 Distributed under the MIT License.
-```
-Distributed under the MIT License.
-```
