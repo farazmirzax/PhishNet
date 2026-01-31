@@ -1,0 +1,52 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="glowGradient" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.2" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Dark background circle -->
+  <circle cx="32" cy="32" r="32" fill="#0f172a"/>
+  
+  <!-- Glow effect -->
+  <circle cx="32" cy="32" r="28" fill="url(#glowGradient)" opacity="0.3"/>
+  
+  <!-- Shield shape -->
+  <path d="M32 8 C 24 8, 16 10, 12 12 L 12 28 C 12 40, 20 50, 32 56 C 44 50, 52 40, 52 28 L 52 12 C 48 10, 40 8, 32 8 Z" 
+        fill="url(#shieldGradient)" 
+        stroke="#22d3ee" 
+        stroke-width="1.5"/>
+  
+  <!-- Inner shield accent -->
+  <path d="M32 14 C 26 14, 20 15.5, 17 17 L 17 28 C 17 37, 23 44, 32 49 C 41 44, 47 37, 47 28 L 47 17 C 44 15.5, 38 14, 32 14 Z" 
+        fill="none" 
+        stroke="#0f172a" 
+        stroke-width="2" 
+        opacity="0.6"/>
+  
+  <!-- Check mark / Security symbol -->
+  <path d="M 24 30 L 29 36 L 40 24" 
+        stroke="#0f172a" 
+        stroke-width="3" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"/>
+  
+  <!-- Sparkle accent -->
+  <circle cx="44" cy="18" r="2" fill="#fbbf24" opacity="0.9">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <path d="M 44 14 L 44 22 M 40 18 L 48 18" 
+        stroke="#fbbf24" 
+        stroke-width="1" 
+        opacity="0.7">
+    <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2s" repeatCount="indefinite"/>
+  </path>
+</svg>
