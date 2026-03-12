@@ -1,0 +1,5 @@
+# Dependencies (reinstalled fresh by npm ci)
+node_modules/
+
+# Previous build output (rebuilt inside Docker)
+dist/

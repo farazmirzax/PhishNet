@@ -1,0 +1,13 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter notebooks (not needed at runtime)
+training/
+
+# Local data (model + scaler are needed, so don't ignore data/)
+data/raw/
