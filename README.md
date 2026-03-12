@@ -59,8 +59,46 @@ PhishNet/
 
 * Python 3.8+
 * Node.js 18+
+* (Optional) Docker & Docker Compose for containerized deployment
 
-### 1. Backend Setup
+### 🐳 Option A: Run with Docker Compose (Recommended for Production)
+
+Docker containerizes both the backend and frontend for easy, reproducible deployment.
+
+**Prerequisites:**
+* Docker Desktop (includes Docker Compose)
+
+**Steps:**
+
+1. From the project root directory:
+```bash
+docker compose up --build
+```
+
+2. Access the application:
+   - **Frontend:** `http://localhost` (port 80)
+   - **Backend API:** `http://localhost:8000/api/scan` (port 8000)
+
+3. To stop:
+```bash
+docker compose down
+```
+
+**What's Included:**
+- `compose.yaml` - Orchestrates both services
+- `backend/Dockerfile` - Python 3.10-slim with FastAPI
+- `frontend/Dockerfile` - Node.js build → Nginx serving
+- `.dockerignore` files - Optimize build context & image size
+
+**Cleanup (reclaim disk space):**
+```bash
+docker compose down
+docker system prune -a --volumes
+```
+
+---
+
+### 1. Backend Setup (Local Development)
 
 Navigate to the backend directory and set up the Python environment:
 
@@ -93,7 +131,7 @@ uvicorn app.main:app --reload
 
 *Server is running at: `http://127.0.0.1:8000*`
 
-### 2. Frontend Setup
+### 2. Frontend Setup (Local Development)
 
 Open a new terminal and navigate to the frontend directory:
 
