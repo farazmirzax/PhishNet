@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "PhishNet Protector",
+  "version": "1.0.0",
+  "description": "AI-powered Phishing Detection - Scan URLs with Deep Learning",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png",
+    "default_title": "PhishNet - Click to scan this page"
+  },
+  "host_permissions": [
+    "https://localhost:8000/*",
+    "http://localhost:8000/*"
+  ],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

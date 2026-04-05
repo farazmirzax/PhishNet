@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhishNet Protector</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 380px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      padding: 0;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px;
+      text-align: center;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .container {
+      padding: 16px;
+      background: white;
+    }
+
+    #current-url {
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      word-break: break-all;
+      color: #666;
+      margin-bottom: 12px;
+      border-left: 3px solid #667eea;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      border-radius: 8px;
+      width: 100%;
+      font-size: 14px;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #loader {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 3px solid #e0e0e0;
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    #results {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    #results.safe {
+      background: #e8f5e9;
+      border: 1px solid #81c784;
+    }
+
+    #results.danger {
+      background: #ffebee;
+      border: 1px solid #ef5350;
+    }
+
+    .status-badge {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .status-text {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .status-text.safe {
+      color: #2e7d32;
+    }
+
+    .status-text.danger {
+      color: #c62828;
+    }
+
+    .confidence {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .confidence-label {
+      font-weight: 600;
+      display: inline-block;
+      min-width: 85px;
+    }
+
+    .details-section {
+      margin-top: 10px;
+    }
+
+    .details-section h4 {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .details-section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .details-section li {
+      font-size: 12px;
+      padding: 6px 0;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .details-section li:before {
+      content: "→ ";
+      font-weight: bold;
+      margin-right: 6px;
+      opacity: 0.7;
+    }
+
+    .error {
+      background: #ffebee;
+      border: 1px solid #ef5350;
+      color: #c62828;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    .footer {
+      font-size: 11px;
+      color: #999;
+      text-align: center;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>🛡️ PhishNet</h2>
+    <p>AI-Powered Phishing Detection</p>
+  </div>
+
+  <div class="container">
+    <div id="current-url">Loading URL...</div>
+    
+    <div style="margin: 12px 0;">
+      <label style="display: block; font-size: 11px; font-weight: 600; color: #666; margin-bottom: 6px; text-transform: uppercase;">Or Enter Custom URL:</label>
+      <input 
+        type="text" 
+        id="custom-url" 
+        placeholder="e.g., https://suspicious-site.com" 
+        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 12px; font-family: monospace;"
+      >
+    </div>
+    
+    <button id="scan-btn" class="btn">🔍 Scan This Page</button>
+    <button id="scan-custom-btn" class="btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); margin-top: 8px;">🔍 Scan Custom URL</button>
+    
+    <div id="loader">
+      <span class="spinner"></span> Analyzing with AI...
+    </div>
+
+    <div id="results"></div>
+
+    <div id="error" class="error" style="display: none;"></div>
+
+    <div class="footer">
+      PhishNet v1.0 | Protecting you from phishing attacks
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
