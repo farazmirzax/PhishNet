@@ -179,41 +179,11 @@ npm run dev
 * **Confidence Score:** AI certainty percentage.
 * **Analysis Report:** Specific reasons for the flag.
 
+---
 
+## 🔬 Model Architecture & Deep Learning Pipeline
 
-## 🧪 API Endpoints
-
-### POST `/api/scan`
-
-Analyzes a URL for phishing indicators.
-
-**Request Body:**
-
-```json
-{
-  "url": "[http://example-phish.com](http://example-phish.com)"
-}
-
-```
-
-**Response:**
-
-```json
-{
-  "url": "[http://example-phish.com](http://example-phish.com)",
-  "is_phishing": true,
-  "confidence_score": 0.98,
-  "risk_level": "CRITICAL",
-  "details": [
-    "⚠️ URL is suspiciously long",
-    "⚠️ Excessive number of dots detected",
-    "⚠️ Deep Learning pattern match"
-  ]
-}
-
-```
-
-## 🔬 Model Details
+### Architecture Overview
 
 The AI model utilizes a **Multi-Input "Y-Network" Architecture**:
 
@@ -261,32 +231,37 @@ The model outputs a confidence score (0.0 to 1.0) that maps to risk levels:
 
 ---
 
-### �📐 Y-Network Architecture Diagram
+## 🧪 API Endpoints
 
-```mermaid
-graph TD
-    A["🔗 User Input<br/>Raw URL String"] --> B["📊 Feature Extraction<br/>12 Lexical Features"]
-    A --> C["🔤 Tokenization<br/>Char-level Encoding<br/>Pad to 150"]
-    B --> D["⚖️ Scaling<br/>StandardScaler<br/>Mean=0, Std=1"]
-    C --> E["🎭 Embedding<br/>5000→32 dims"]
-    E --> F["🔄 Bi-Directional LSTM<br/>Read L→R & R→L<br/>Output: 64 dims"]
-    D --> G["🧠 Dense Layer<br/>12→64→32 dims<br/>ReLU Activation"]
-    F --> H["🔗 Concatenate<br/>64 + 32 = 96 dims"]
-    G --> H
-    H --> I["🧠 Dense Layer<br/>96→64 dims<br/>+ Dropout 0.5"]
-    I --> J["📈 Sigmoid Output<br/>0 = Safe | 1 = Phishing<br/>Confidence: 0-100%"]
-    K["✅ Whitelist<br/>Fast Pre-check"] -.->|"If matched"| L["Result: SAFE"]
-    J --> L
-    style A fill:#2563eb,stroke:#1e40af,color:#fff
-    style F fill:#dc2626,stroke:#991b1b,color:#fff
-    style G fill:#059669,stroke:#065f46,color:#fff
-    style H fill:#7c3aed,stroke:#6d28d9,color:#fff
-    style J fill:#d97706,stroke:#b45309,color:#fff
+### POST `/api/scan`
+
+Analyzes a URL for phishing indicators.
+
+**Request Body:**
+
+```json
+{
+  "url": "http://example-phish.com"
+}
+```
+
+**Response:**
+
+```json
+{
+  "url": "http://example-phish.com",
+  "is_phishing": true,
+  "confidence_score": 0.98,
+  "risk_level": "CRITICAL",
+  "details": [
+    "⚠️ URL is suspiciously long",
+    "⚠️ Excessive number of dots detected",
+    "⚠️ Deep Learning pattern match"
+  ]
+}
 ```
 
 ---
-
-## 🔀 System Flow Diagram
 
 How data flows from the user's input to the final security verdict:
 
@@ -341,19 +316,6 @@ graph LR
 
 ---
 
-## � Browser Extension (Coming Soon)
-
-PhishNet is also available as a **Chrome/Firefox browser extension** for real-time URL scanning while browsing. 
-
-*Status: In Development*
-
-The extension will allow you to:
-- Right-click on any link and check if it's phishing
-- Display real-time security badges on search results
-- Show confidence scores without leaving your browser
-
----
-
 ## �🖼️ User Interface Screenshots
 
 ### Home Page - URL Scanner
@@ -364,6 +326,19 @@ The extension will allow you to:
 
 ### Legitimate URL - Safe
 ![Safe Result](media/safe-result.png)
+
+---
+
+## � Browser Extension (Coming Soon)
+
+PhishNet is also available as a **Chrome/Firefox browser extension** for real-time URL scanning while browsing. 
+
+*Status: In Development*
+
+The extension will allow you to:
+- Right-click on any link and check if it's phishing
+- Display real-time security badges on search results
+- Show confidence scores without leaving your browser
 
 ---
 
