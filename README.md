@@ -4,6 +4,16 @@
 
 PhishNet is a full-stack cybersecurity tool that detects phishing URLs in real-time. It utilizes a **Hybrid Architecture** combining a high-speed whitelist engine with a custom **Deep Learning Y-Network** (Bi-LSTM + Dense layers) to analyze URL patterns and protect users from malicious attacks.
 
+---
+
+## 🎬 **Live Demo**
+
+![PhishNet Demo](media/demo.gif)
+
+> *Scanning a phishing URL and getting real-time analysis with confidence score*
+
+---
+
 ## ✨ Features
 
 - 🧠 **Hybrid Detection Engine** - Instantly validates trusted domains (Whitelist) before engaging AI.
@@ -199,6 +209,97 @@ The AI model utilizes a **Multi-Input "Y-Network" Architecture**:
 1. **Branch 1 (Text Sequence):** Character-level Embedding → Bi-Directional LSTM (Learns semantic patterns in the URL string).
 2. **Branch 2 (Metadata):** Dense Layers processing 12 calculated features (Length, IP presence, Dot count, Hyphen count, etc.).
 3. **Fusion:** Both branches are concatenated and passed through a final Dense layer with Sigmoid activation.
+
+### 📐 Y-Network Architecture Diagram
+
+```mermaid
+graph TD
+    A["🔗 User Input<br/>Raw URL String"] --> B["📊 Feature Extraction<br/>12 Lexical Features"]
+    A --> C["🔤 Tokenization<br/>Char-level Encoding<br/>Pad to 150"]
+    B --> D["⚖️ Scaling<br/>StandardScaler<br/>Mean=0, Std=1"]
+    C --> E["🎭 Embedding<br/>5000→32 dims"]
+    E --> F["🔄 Bi-Directional LSTM<br/>Read L→R & R→L<br/>Output: 64 dims"]
+    D --> G["🧠 Dense Layer<br/>12→64→32 dims<br/>ReLU Activation"]
+    F --> H["🔗 Concatenate<br/>64 + 32 = 96 dims"]
+    G --> H
+    H --> I["🧠 Dense Layer<br/>96→64 dims<br/>+ Dropout 0.5"]
+    I --> J["📈 Sigmoid Output<br/>0 = Safe | 1 = Phishing<br/>Confidence: 0-100%"]
+    K["✅ Whitelist<br/>Fast Pre-check"] -.->|"If matched"| L["Result: SAFE"]
+    J --> L
+    style A fill:#2563eb,stroke:#1e40af,color:#fff
+    style F fill:#dc2626,stroke:#991b1b,color:#fff
+    style G fill:#059669,stroke:#065f46,color:#fff
+    style H fill:#7c3aed,stroke:#6d28d9,color:#fff
+    style J fill:#d97706,stroke:#b45309,color:#fff
+```
+
+---
+
+## 🔀 System Flow Diagram
+
+How data flows from the user's input to the final security verdict:
+
+```mermaid
+graph LR
+    subgraph Frontend["⚛️ FRONTEND<br/>React + TypeScript"]
+        A["Scanner Component<br/>URL Input Field"]
+    end
+    
+    subgraph API["🚀 BACKEND API<br/>FastAPI + Async"]
+        B["POST /api/scan<br/>Endpoint"]
+        C["Feature Extractor<br/>Calculate 12 Features"]
+    end
+    
+    subgraph ML["🤖 ML PIPELINE<br/>TensorFlow/Keras"]
+        D["Load Tokenizer<br/>tokenizer.pickle"]
+        E["Load Scaler<br/>scaler.joblib"]
+        F["Load Model<br/>phishnet_v1.keras"]
+        G["Predict<br/>Bi-LSTM + Dense"]
+    end
+    
+    subgraph Whitelist["✅ HYBRID ENGINE"]
+        H["Check Whitelist<br/>Known Safe Domains"]
+    end
+    
+    subgraph Response["📊 RESPONSE"]
+        I["JSON Response<br/>is_phishing, confidence,<br/>risk_level, details"]
+    end
+    
+    subgraph Display["🎨 DISPLAY"]
+        J["ResultCard<br/>Risk Badge + Report"]
+    end
+    
+    A -->|"User enters URL"| B
+    B --> H
+    H -->|"Not in Whitelist"| C
+    C --> D
+    C --> E
+    D --> G
+    E --> G
+    F --> G
+    G --> I
+    H -->|"In Whitelist"| I
+    I --> J
+    
+    style A fill:#3b82f6,stroke:#1e40af,color:#fff
+    style B fill:#ef4444,stroke:#991b1b,color:#fff
+    style G fill:#8b5cf6,stroke:#6d28d9,color:#fff
+    style I fill:#10b981,stroke:#047857,color:#fff
+    style J fill:#f59e0b,stroke:#b45309,color:#fff
+```
+
+---
+
+## 🖼️ User Interface Screenshots
+
+### Home Page - URL Scanner
+![Home Page](media/01-home-page.png)
+
+### Phishing Detected - Critical Risk
+![Phishing Result](media/02-phishing-result.png)
+
+### Legitimate URL - Safe
+![Safe Result](media/03-safe-result.png)
 
 ## 🤝 Contributing
 
