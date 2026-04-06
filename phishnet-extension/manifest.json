@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "PhishNet Protector",
+  "name": "PhishNet",
   "version": "1.0.0",
   "description": "AI-powered Phishing Detection - Scan URLs with Deep Learning",
   "permissions": ["activeTab", "scripting"],
