@@ -26,7 +26,7 @@ function App() {
       <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse" style={{animationDelay: '0.5s'}}></div>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-5xl flex-1 flex flex-col justify-center">
+      <div className="relative z-10 w-full flex flex-col items-center justify-center flex-1">
         
         {/* Header */}
         <div className="mb-16 animate-fade-in-down text-center">
@@ -63,11 +63,11 @@ function App() {
         </div>
 
         {/* The Switcher: Scanner vs Result */}
-        <div className="flex-1 flex items-center justify-center">
+        <div className="w-full flex items-center justify-center">
           {!result ? (
             <Scanner onScanComplete={handleScanComplete} />
           ) : (
-            <div className="w-full space-y-8 animate-fade-in">
+            <div className="w-full max-w-3xl space-y-8 animate-fade-in">
               <ResultCard result={result} />
               
               <div className="flex justify-center">

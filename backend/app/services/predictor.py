@@ -40,7 +40,9 @@ class PhishNetPredictor:
         WHITELIST = {
             "github.com", "google.com", "paypal.com", "microsoft.com", 
             "apple.com", "amazon.com", "facebook.com", "instagram.com",
-            "stackoverflow.com", "linkedin.com", "youtube.com"
+            "stackoverflow.com", "linkedin.com", "youtube.com", "reddit.com",
+            "twitter.com", "wikipedia.org", "huggingface.co", "openai.com",
+            "pytorch.org", "tensorflow.org", "kaggle.com", "medium.com"
         }
 
         if domain in WHITELIST:
@@ -71,24 +73,39 @@ class PhishNetPredictor:
         
         # --- LAYER 3: EXPLAINABILITY REPORT ---
         details = []
+        hostname = url.split('//')[-1].split('/')[0]
 
         if is_phishing:
+            # Phishing indicators - be more granular
             if raw_features[2] == 1:
                 details.append("⚠️ Host uses an IP address instead of a domain name.")
             if raw_features[0] > 75:
                 details.append(f"⚠️ URL is suspiciously long ({raw_features[0]} characters).")
+            if len(hostname) > 40:
+                details.append(f"⚠️ Hostname is unusually long ({len(hostname)} chars) - often used to hide malicious intent.")
             if raw_features[3] > 3:
-                details.append("⚠️ Excessive number of dots detected (possible subdomain masking).")
+                details.append(f"⚠️ Excessive subdomains detected ({raw_features[3]} dots) - possible masking attack.")
+            if raw_features[4] > 0:
+                details.append(f"⚠️ Hyphens in domain name ({raw_features[4]}) - common in phishing URLs.")
             if raw_features[5] > 0:
-                details.append("⚠️ URL contains '@' symbol (often used to obscure destination).")
+                details.append("⚠️ URL contains '@' symbol - often used to obscure destination.")
+            if raw_features[6] > 0:
+                details.append("⚠️ Question mark without HTTPS - potential redirect vulnerability.")
             if raw_features[11] > 0.45:
-                details.append("⚠️ High density of random numbers in the URL.")
+                details.append("⚠️ High ratio of digits in URL - random padding common in phishing.")
             
-            if not details:
-                details.append("⚠️ Deep Learning pattern match (Semantic Structure).")
+            # Add AI confidence only if very few features matched (pattern-based detection)
+            if len(details) == 0:
+                details.append(f"🤖 Deep learning model detected phishing pattern ({confidence * 100:.1f}% confidence).")
+            
         else:
-            details.append("✅ URL structure appears standard.")
-            details.append("✅ Domain name is valid.")
+            details.append("✅ URL structure appears legitimate.")
+            if len(hostname) <= 30:
+                details.append("✅ Hostname length is normal.")
+            if raw_features[0] < 75:
+                details.append("✅ URL length is within standard range.")
+            if raw_features[3] <= 3:
+                details.append("✅ Domain structure is standard (minimal subdomains).")
 
         return {
             "url": url,

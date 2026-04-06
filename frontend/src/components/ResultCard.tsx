@@ -108,7 +108,7 @@ export default function ResultCard({ result }: { result: ScanResult }) {
           <div className="w-full text-left bg-slate-900/90 p-6 rounded-xl border border-slate-700 hover:border-slate-600 transition-colors">
             <div className="flex items-center gap-2 mb-4">
               <Activity className="w-5 h-5 text-cyan-400" />
-              <h3 className="text-white font-bold text-base uppercase tracking-wide">Detailed Analysis</h3>
+              <h3 className="text-white font-bold text-base uppercase tracking-wide">Analysis</h3>
             </div>
             
             <ul className="space-y-3">

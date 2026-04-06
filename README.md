@@ -293,13 +293,13 @@ graph LR
 ## 🖼️ User Interface Screenshots
 
 ### Home Page - URL Scanner
-![Home Page](media/01-home-page.png)
+![Home Page](media/home-page.png)
 
 ### Phishing Detected - Critical Risk
-![Phishing Result](media/02-phishing-result.png)
+![Phishing Result](media/phishing-result.png)
 
 ### Legitimate URL - Safe
-![Safe Result](media/03-safe-result.png)
+![Safe Result](media/safe-result.png)
 
 ## 🤝 Contributing
 
